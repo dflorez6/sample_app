@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
+gem 'bootstrap-sass'
+gem 'bcrypt-ruby'
+gem 'faker'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 gem 'pg'
 gem 'jquery-rails'
-gem 'bootstrap-sass'
-gem 'meta_search',    '>= 1.1.0.pre'
-gem 'meta-tags', :require => 'meta_tags'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.12.2'
@@ -14,19 +16,18 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'factory_girl_rails'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
 end
 
+# Gems used only for assets and not required
+# in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.6'
   gem 'coffee-rails', '~> 3.2.2'
   gem 'uglifier', '>= 1.3.0'
 end
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
