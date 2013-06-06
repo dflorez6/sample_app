@@ -1,14 +1,20 @@
+<<<<<<< HEAD
 /.bundle
 /log/*.log
 /tmp
 .idea
 .idea/**/*
+=======
+>>>>>>> 31c1c7ce400dd3183a7685baedf929290cd43f8e
 *.rbc
 *.sassc
 .sass-cache
 capybara-*.html
 .rspec
+<<<<<<< HEAD
 .rvmrc
+=======
+>>>>>>> 31c1c7ce400dd3183a7685baedf929290cd43f8e
 /.bundle
 /vendor/bundle
 /log/*
@@ -19,7 +25,11 @@ capybara-*.html
 /spec/tmp/*
 **.orig
 rerun.txt
+<<<<<<< HEAD
 pickle-email-*.html
 .project
 .DS_Store
 Desktop.ini
+=======
+pickle-email-*.html
+>>>>>>> 31c1c7ce400dd3183a7685baedf929290cd43f8e
