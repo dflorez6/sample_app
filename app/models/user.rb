@@ -9,13 +9,18 @@
 #  updated_at :datetime         not null
 #
 
+
 class User < ActiveRecord::Base
-  attr_accessible :name, :email
+  attr_accessible :name, :email, :password, :password_confirmation
+  has_secure_password
 
-  before_save { |user| user.email = email.downcase }
+  before_save { email.downcase! }             # Makes sure the email address is lower cased before being saved
 
-  validates :name,  presence: true, length: { maximum: 50 }
+  validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
+  validates :email, presence:   true,
+            format:     { with: VALID_EMAIL_REGEX },
             uniqueness: { case_sensitive: false }
+  validates :password, presence: true, length: { minimum: 6 }    # Prescence and length validation for the password
+  validates :password_confirmation, presence: true
 end
