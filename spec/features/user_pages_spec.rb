@@ -32,6 +32,21 @@ describe "UserPages" do
       it "should not create a user" do
         expect { click_button submit }.not_to change(User, :count)
       end
+
+      describe "after submission" do
+        before { click_button submit }
+
+        it { should have_selector('title', text: 'Sign up') }
+        it { should have_content('error') }
+
+        it "should contain error messages" do
+          empty_user = User.new
+          empty_user.save
+          empty_user.errors.full_messages.each do |message|
+            should have_content(message)
+          end
+        end
+      end
     end
 
     describe "with valid information" do
@@ -45,6 +60,15 @@ describe "UserPages" do
       it "should create a user" do
         expect { click_button submit }.to change(User, :count).by(1)
       end
+
+      describe "after saving the user" do                    # Tests for the post-save behavior in the create action
+        before { click_button submit }
+        let(:user) { User.find_by_email('user@example.com') }
+
+        it { should have_title(full_title(user.name)) }
+        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+      end
+
     end
   end
 

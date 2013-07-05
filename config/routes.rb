@@ -1,12 +1,19 @@
 SampleApp::Application.routes.draw do
+  # Defining resources
   resources :users
+  resources :sessions, only: (:new; :create; :destroy)    # There is no need for show or edit actions, so we limit the resource by using only:()
 
+  # Root or Home or Index
   root to: 'static_pages#home'
 
-  match '/signup',  to: 'users#new'
+  # Routes matches
+  match '/signup',  to: 'users#new'                       # Here the route is matched to the NEW action in the USERS controller
+  match '/signin',  to: 'sessions#new'                    # Here the route is matched to the NEW action in the SESSIONS controller
+  match '/signout', to: 'sessions#destroy', via: :delete  # We use via: :delete to invoke HTTP DELETE Request
 
-  match '/help', to: 'static_pages#help'
-  match '/about', to: 'static_pages#about'
+
+  match '/help',    to: 'static_pages#help'               # Here the routes are matched to the STATIC_PAGES controller
+  match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
 
 
