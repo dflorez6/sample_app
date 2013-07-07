@@ -8,6 +8,7 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'pg'
 gem 'jquery-rails'
+gem 'heroku'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.12.2'
