@@ -1,2 +1,19 @@
 <% provide(:title, "Sign in") %>
 <h1>Sign in</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(:session, url: sessions_path) do |f| %>      <!-- The main difference between this and the signin form is that we have no Session model, and hence no analogue for the @user variable. In the case of sessions we need to indicate the name of the resource and the corresponding URI: -->
+
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+
+        <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+    <% end %>
+
+    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 SampleApp::Application.routes.draw do
   # Defining resources
   resources :users
-  resources :sessions, only: (:new; :create; :destroy)    # There is no need for show or edit actions, so we limit the resource by using only:()
+  resources :sessions, only: [:new, :create, :destroy]    # There is no need for show or edit actions, so we limit the resource by using only:()
 
   # Root or Home or Index
   root to: 'static_pages#home'

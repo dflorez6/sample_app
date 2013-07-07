@@ -10,10 +10,12 @@ class UsersController < ApplicationController
   def create                        # Create action
     @user = User.new(params[:user])
     if @user.save
+      sign_in @user
       flash[:success] = "Welcome to the Sample App!"  # Flash message if signup is successful
-      redirect_to @user             # Redirects to the user's show page
+      redirect_to @user                               # Redirects to the user's show page
+
     else
-      render 'new'                  # Renders "new" view with error message when signup fails due to invalid info
+      render 'new'                                    # Renders "new" view with error message when signup fails due to invalid info
     end
   end
 end

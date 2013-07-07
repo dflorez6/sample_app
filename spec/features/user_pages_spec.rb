@@ -67,6 +67,7 @@ describe "UserPages" do
 
         it { should have_title(full_title(user.name)) }
         it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+        it { should have_link('Sign out') }                  # Testing the appearance of the signout link to verify that the user was successfully signed in after signing up.
       end
 
     end

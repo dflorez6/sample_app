@@ -26,6 +26,7 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) }           # Test for authentication token that will persist
   it { should respond_to(:authenticate) }
 
   it { should be_valid }
@@ -124,4 +125,12 @@ describe User do
     end
   end
 
+  describe "remember token" do                                     # A test for a valid (nonblank) remember token.
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }                   # The its method, which is like it but applies the subsequent test to the given attribute rather than the subject of the test
+    # it { @user.remember_token.should_not be_blank }              EQUIVALENT
+  end
+
 end
+
+
