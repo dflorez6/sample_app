@@ -1,14 +1,13 @@
 source 'https://rubygems.org'
-ruby '1.9.3'
+
 gem 'rails', '3.2.11'
 gem 'bootstrap-sass'
-gem 'bcrypt-ruby'             #Encrypt password
+gem 'bcrypt-ruby', '3.0.1'            #Encrypt password
 gem 'faker'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'pg'
 gem 'jquery-rails'
-gem 'heroku'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.12.2'
