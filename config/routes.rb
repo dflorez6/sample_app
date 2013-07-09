@@ -2,6 +2,7 @@ SampleApp::Application.routes.draw do
   # Defining resources
   resources :users
   resources :sessions, only: [:new, :create, :destroy]    # There is no need for show or edit actions, so we limit the resource by using only:()
+  resources :microposts, only: [:create, :destroy]        # Routes for the Microposts resource.
 
   # Root or Home or Index
   root to: 'static_pages#home'

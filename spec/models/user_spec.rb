@@ -8,6 +8,8 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
+#  remember_token  :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 require 'spec_helper'
@@ -27,8 +29,10 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }           # Test for authentication token that will persist
-  it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }                    # Test for admin user
+  it { should respond_to(:authenticate) }
+  it { should respond_to(:microposts) }               #  A test for the user’s microposts attribute.
+  it { should respond_to(:feed) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -137,10 +141,52 @@ describe User do
     end
   end
 
+  # Test for remember_token
   describe "remember token" do                                     # A test for a valid (nonblank) remember token.
     before { @user.save }
     its(:remember_token) { should_not be_blank }                   # The its method, which is like it but applies the subsequent test to the given attribute rather than the subject of the test
     # it { @user.remember_token.should_not be_blank }              EQUIVALENT
+  end
+
+  # Testing the order of a user’s microposts.
+  describe "micropost association" do
+
+    before { @user.save }
+    let!(:older_micropost) do                                                     # let! forces the corresponding variable to come into existence immediately.
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_micropost) do                                                     # let! forces the corresponding variable to come into existence immediately.
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
+    end
+
+    # Testing the right order that microposts are displayed
+    it "should have the right micropost in the right order" do
+      @user.microposts.should == [newer_micropost, older_micropost]               # Indicates that the posts should be ordered newest first.
+    end
+
+    # Testing that microposts are destroyed when users are.
+    it "should destroy associated microposts" do
+      microposts = @user.microposts.dup
+      @user.destroy
+      microposts.should_not be_empty
+      microposts.each do |micropost|
+        Micropost.find_by_id(micropost.id).should be_nil                          # Returns nil if the record is not found
+      end
+    end
+
+    # Tests for the status feed.
+    describe "status" do
+      let(:unfollowed_post) do
+        FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_micropost) }
+      its(:feed) { should include(older_micropost) }
+      its(:feed) { should_not include(unfollowed_post) }
+
+    end
+
+
   end
 
 end

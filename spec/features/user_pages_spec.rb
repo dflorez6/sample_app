@@ -4,7 +4,7 @@ describe "UserPages" do
 
   subject { page }
 
-  # Index page Tests.
+  # Index page Tests
   describe "index" do
     let(:user) { FactoryGirl.create(:user) }
 
@@ -133,7 +133,6 @@ describe "UserPages" do
   end
 
   # Edit Tests
-
   describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
     before { visit edit_user_path(user) }
@@ -169,6 +168,25 @@ describe "UserPages" do
       specify { user.reload.name.should == new_name }             # This reloads the user variable from the test database using user.reload, and then verifies that the user’s new name and email match the new values.
       specify { user.reload.email.should == new_email }           # This reloads the user variable from the test database using user.reload, and then verifies that the user’s new name and email match the new values.
 
+    end
+
+  end
+
+  #  Tests for showing microposts on the user show page.
+  describe "profile page" do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
+    let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "Bar") }
+
+    before { visit user_path(user) }
+
+    it { should have_selector('h1',    text: user.name) }
+    it { should have_title(user.name) }
+
+    describe "microposts" do
+      it { should have_content(m1.content) }
+      it { should have_content(m2.content) }
+      it { should have_content(user.microposts.count) }
     end
 
   end

@@ -8,4 +8,13 @@
       </h1>
     </section>
   </aside>
+  <div class="span8">
+    <% if @user.microposts.any? %>
+        <h3>Microposts (<%= @user.microposts.count %>)</h3>
+        <ol class="microposts">                                <!-- Uses a partial to render the microposts. Notice that the partial name is singular. -->
+          <%= render @microposts %>
+        </ol>
+        <%= will_paginate @microposts %>                        <!-- we pass an explicit @microposts variable to will_paginate -->
+    <% end %>
+  </div>
 </div>
