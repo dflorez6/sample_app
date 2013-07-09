@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 gem 'bootstrap-sass'
-gem 'bcrypt-ruby', '3.0.1'            #Encrypt password
-gem 'faker'
+gem 'bcrypt-ruby', '3.0.1'            # Encrypt password
+gem 'faker'                           # Allows us to make sample users with semi-realistic names and email addresses.
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'pg'

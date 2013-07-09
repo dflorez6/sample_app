@@ -16,9 +16,23 @@ module SessionsHelper
     @current_user ||= User.find_by_remember_token(cookies[:remember_token])
   end
 
+  def current_user?(user)
+    user == current_user
+  end
 
   def sign_out                                                    # We signout a user simply by setting the current user to nil and using the delete method on cookies to remove the remember token from the session
     self.current_user = nil
     cookies.delete(:remember_token)
   end
+
+  # Code to implement friendly forwarding.
+  def redirect_back_or(default)
+    redirect_to(session[:return_to] || default)
+    session.delete(:return_to)
+  end
+
+  def store_location
+    session[:return_to] = request.url                             # We use the request object to get the url, i.e., the URI/URL of the requested page.
+  end
+
 end

@@ -28,20 +28,32 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }           # Test for authentication token that will persist
   it { should respond_to(:authenticate) }
+  it { should respond_to(:admin) }                    # Test for admin user
 
   it { should be_valid }
+  it { should_not be_admin }
 
-  describe "when name is not present" do        # Presence Validation (checks for a non_blank name)
+  # Tests for an admin attribute.
+  describe "with admin attribute set to 'true'" do
+    before do
+      @user.save!
+      @user.toggle!(:admin)                           # Here we’ve used the toggle! method to flip the admin attribute from false to true
+    end
+
+    it { should be_admin }
+  end
+
+  describe "when name is not present" do              # Presence Validation (checks for a non_blank name)
     before { @user.name = "" }
     it { should_not be_valid }
   end
 
-  describe "when email is not present" do       # Presence Validation (checks for a non_blank email)
+  describe "when email is not present" do             # Presence Validation (checks for a non_blank email)
     before { @user.email = "" }
     it { should_not be_valid }
   end
 
-  describe "when name is too long" do           # Length Validation
+  describe "when name is too long" do                 # Length Validation
     before { @user.name = "a" * 51 }
     it { should_not be_valid }
   end
