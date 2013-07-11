@@ -1,8 +1,21 @@
 SampleApp::Application.routes.draw do
+  get "relationships/create"
+
+  get "relationships/destroy"
+
+  #---------------------
   # Defining resources
-  resources :users
+  #---------------------
+
+  resources :users do
+    member do                                             # The MEMBER method means that the routes respond to URIs containing the user id
+      get :following, :followers                          # Adding following and followers actions to the Users controller. We use get to arrange for the URIs to respond to GET requests
+    end
+  end
+
   resources :sessions, only: [:new, :create, :destroy]    # There is no need for show or edit actions, so we limit the resource by using only:()
   resources :microposts, only: [:create, :destroy]        # Routes for the Microposts resource.
+  resources :relationships, only: [:create, :destroy]      # Routes for the Relationships resource.
 
   # Root or Home or Index
   root to: 'static_pages#home'
