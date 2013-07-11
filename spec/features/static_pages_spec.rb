@@ -34,6 +34,20 @@ describe "Static pages" do
         end
       end
 
+      # Testing the following/follower statistics on the Home page.
+      describe "follower/following counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit root_path
+        end
+
+        it { should have_link("0 following", href: following_user_path(user)) }             # The core of this test is the expectation that the following and follower counts appear on the page, together with the right URIs.
+        it { should have_link("1 followers", href: followers_user_path(user)) }             # Here we have used the named routes shown in Table 11.1 to verify that the links have the right addresses.
+
+      end
+
+
     end
 
   end
@@ -82,5 +96,7 @@ describe "Static pages" do
     page.should have_title(full_title(''))
   end
 =end
+
+  #
 
 end

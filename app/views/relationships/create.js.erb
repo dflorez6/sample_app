@@ -1,0 +1,2 @@
+$("#follow_form").html("<%= escape_javascript(render('users/unfollow')) %>")        // Updates the follow form with the unfollow partial (which is what should show after a successful following). This uses the escape_javascript function, which is needed to escape out the result when inserting HTML in a JavaScript file.
+$("#followers").html('<%= @user.followers.count %>')                                // Updates the follower count.

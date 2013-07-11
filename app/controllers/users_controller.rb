@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user,  only: [:index, :edit, :update, :destroy]       # We restrict the before filter only to the edit and update actiones, otherwise it will apply to all of the controller actions.
+  before_filter :signed_in_user,                                                 # We restrict the before filter only to the edit and update actiones, otherwise it will apply to all of the controller actions.
+                only: [:index, :edit, :update, :destroy, :following, :followers] # :following and :followers actions are declared in the routes file.
   before_filter :correct_user,    only: [:edit, :update]                         # A correct_user before filter to protect the edit/update pages.
   before_filter :admin_user,      only: :destroy                                 # A before filter restricting the destroy action to admins.
 
@@ -48,6 +49,22 @@ class UsersController < ApplicationController
     flash[:success] = "User destroyed."
     redirect_to users_url
   end
+
+  # The following and followers actions.
+  def following                                                       # Note here that both actions make an explicit call to render, in this case rendering a view called show_follow
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
 
   private
     def correct_user
